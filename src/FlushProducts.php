@@ -1,7 +1,7 @@
 <?php
 include 'dbconfig.php';
 
-function FlushProducts($model) {
+function FlushProducts(Products $model) {
   try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
       // set the PDO error mode to exception
