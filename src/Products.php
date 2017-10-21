@@ -62,9 +62,9 @@ class Products {
     $this->products_ean = $ean;
   }
 
-  public function set_ImagePath(string $path) {
-    $this->products_image = $path;
-  }
+  // public function set_ImagePath(string $path) {
+  //   $this->products_image = $path;
+  // }
 
   public function set_Description(string $desc) {
     $this->products_description = $desc;
@@ -72,6 +72,34 @@ class Products {
 
   public function set_ShortDescription(string $desc) {
     $this->products_short_description = $desc;
+  }
+
+  public function Prefix() : string {
+    return $this->prefix;
+  }
+
+  public function Name() : string {
+    return $this->products_name;
+  }
+
+  public function Model() : string {
+    return $this->products_name;
+  }
+
+  public function EAN() : string {
+    return $this->products_ean;
+  }
+
+  // public function ImagePath() : string {
+  //   return $this->products_image;
+  // }
+
+  public function Description() : string {
+    return $this->products_description;
+  }
+
+  public function ShortDescription() : string {
+    return $this->products_short_description;
   }
   /**
    * private methods
