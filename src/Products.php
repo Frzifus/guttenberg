@@ -24,7 +24,7 @@ class Products {
   /** @products_ean @Column(type="varchar128") */
   private $products_ean;
   /** @products_image @Column(type="varchar254") */
-  private string $products_image;
+  private $products_image;
   /** @products_description @Column(type="text") */
   private $products_description;
   /** @products_short_description @Column(type="text") */
