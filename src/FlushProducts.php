@@ -1,21 +1,23 @@
-<?php
+<?Php
 include 'dbconfig.php';
 
 function FlushProducts(Products $model) {
-  try {
-    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-      // set the PDO error mode to exception
-      $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $toJson = [
+    'prefix' => $model->Prefix(),
+    'DOMPath' => [
+      'products_name' => $model->Name(),
+      'products_model'=> $model->Model(),
+      'products_ean'  => $model->EAN(),
+      'products_description' => $model->Description(),
+      'products_short_description' => $model->ShortDescription(),
+      'products_price'  => $model->Price(),
+      'manufacturer_id' => $model->Manufacturer(),
+      'products_weight' => $model->Weight(),
+      'products_image' => []
+    ]
+  ];
 
-      $sql = "INSERT INTO products (products_name, products_model, products_ean,
-              products_description, products_short_description, products_price,
-              products_weight, manufacturer_id)
-              VALUES ($model->Name(), $model->Model(), $model->EAN(),
-              $model->Description(), $model->ShortDescription(), $model->Price(),
-              $model->Weight(), $model->Manufacturer());";
-      $conn->exec($sql);
-  }
-  catch(PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
-  }
+  $filename = 'data/' . $model->Prefix() . '_' . $model->Name() . '.json';
+
+  file_put_content($filename, json_encode($toJson));
 }
