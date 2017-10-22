@@ -16,13 +16,14 @@ include 'ContentTuple.php';
 /**
  * @return array
  */
-function PullContent(array $uris) : array {
+function PullContent(array $uris, array $allPattern) : array {
   $content = array();
   foreach ($uris as $url) {
     try {
       $tuple = new ContentTuple();
-      $tuple->Pattern = UrlMatchPattern($url);
+      $tuple->Pattern = UrlMatchPattern($url, $allPattern);
       $tuple->Content = file_get_contents($url);
+      if (count($tuple->Pattern) == 0) { continue; }
       $content[] = $tuple;
     } catch(Exception $e) {
       echo "Fehler beim holen von: " . $url;
@@ -33,10 +34,15 @@ function PullContent(array $uris) : array {
 
 
 /**
- * @return bool
+ * @return array
  */
-function UrlMatchPattern($url) : bool {
-  return true;
+function UrlMatchPattern(string $url, array $pattern) : array {
+  foreach ($pattern as $p) {
+    if (preg_match('/' . $p["prefix"] . '/', $url)) {
+      return $p;
+    }
+  }
+  return array();
 }
 
 /**
@@ -68,9 +74,9 @@ function MapAndParseDom(ContentTuple $tuple) : Products {
   return $product;
 }
 
-function ListAllPatternFiles() : array {
+function ListAllPatternFiles(string $path = "./pattern") : array {
   $allPattern = array();
-  $dir = scandir('./Pattern');
+  $dir = scandir($path);
   foreach ($dir as $file) {
     if (preg_match("/\.json/", $file)) {
       $allPattern[] = $file;
@@ -79,21 +85,14 @@ function ListAllPatternFiles() : array {
   return $allPattern;
 }
 
-function ReadPattern(string $file) : array {
-  $json = file_get_contents('Pattern/' . $file, NULL, NULL);
-  $jsonIterator = new RecursiveIteratorIterator(
-    new RecursiveArrayIterator(json_decode($json, TRUE)),
-    RecursiveIteratorIterator::SELF_FIRST);
-
-  var_dump($jsonIterator);
-  exit();
-  foreach ($jsonIterator as $key => $val) {
-    if(is_array($val)) {
-      echo "$key:\n";
-    } else {
-      echo "$key => $val\n";
-    }
+function ReadAllPattern(array $files) : array {
+  $allPattern = array();
+  foreach ($files as $file) {
+    $json = file_get_contents('pattern/' . $file, NULL, NULL);
+    $json = json_decode($json, true);
+    $allPattern[] = $json;
   }
+  return $allPattern;
 }
 
 /******************************************************************************/
@@ -120,6 +119,17 @@ foreach(preg_split("/((\r?\n)|(\r\n?))/", $rawText) as $line) {
   }
 }
 
-$content = PullContent($URIS);
+$patternFilelist = ListAllPatternFiles();
+$allPattern = ReadAllPattern($patternFilelist);
 
+$content = PullContent($URIS, $allPattern);
+
+$products = array();
+
+foreach ($content as $tuple) {
+  $products[] = MapAndParseDom($tuple);
+}
+foreach ($products as $product) {
+  FlushProduct($product);
+}
 ?>
