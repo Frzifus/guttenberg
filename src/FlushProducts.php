@@ -1,5 +1,4 @@
 <?Php
-include 'dbconfig.php';
 
 function FlushProducts(Products $model) {
   $toJson = [
