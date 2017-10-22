@@ -62,8 +62,6 @@ function MapAndParseDom(ContentTuple $tuple) : Products {
     $product->set_Name($xpath->query($tuple->pattern["products_name"]));
     $product->set_Model($xpath->query($tuple->pattern["products_model"]));
     $product->set_EAN($xpath->query($tuple->pattern["products_ean"]));
-    $product->set_ManufacturerId($xpath->query(
-      $tuple->pattern["manufacturer_id"]));
     $product->set_Description($xpath->query(
       $tuple->pattern["products_description"]));
     $product->set_ShortDescription($xpath->query(
@@ -106,7 +104,7 @@ function ReadAllPattern(array $files) : array {
  * @var rawText
  */
 // $rawText = $_POST["URI"];
-$rawText = "https://google.de\r\nrofl";
+$rawText = "https://allpa.de/bedienungen/lenkungssytemen/cilinders/seastar-zylinder-kgm-fur-hydraulisches-innenbord-steuersystem-ba125-3atm-jet.html";
 
 $URIS = array();
 
