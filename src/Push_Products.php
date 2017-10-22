@@ -62,6 +62,8 @@ function MapAndParseDom(ContentTuple $tuple) : Products {
     $product->set_Name($xpath->query($tuple->pattern["products_name"]));
     $product->set_Model($xpath->query($tuple->pattern["products_model"]));
     $product->set_EAN($xpath->query($tuple->pattern["products_ean"]));
+    $product->set_ManufacturerId($xpath->query(
+      $tuple->pattern["manufacturer_id"]));
     $product->set_Description($xpath->query(
       $tuple->pattern["products_description"]));
     $product->set_ShortDescription($xpath->query(
