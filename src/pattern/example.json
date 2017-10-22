@@ -1,6 +1,7 @@
 {
   "prefix" : "example",
   "DOMPath" : {
+    "manufacturer_id" : "",
     "products_name" : "",
     "products_model" : "",
     "products_ean" : "",
