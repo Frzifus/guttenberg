@@ -15,6 +15,7 @@ prefix = input("Prefix: ")
 data = {
     "prefix": prefix,
     "DOMPath": {
+        "manufacturer_id": input("Manufacturer id: "),
         "products_name": input("Name: "),
         "products_model": input("Model: "),
         "products_ean": input("EAN: "),
