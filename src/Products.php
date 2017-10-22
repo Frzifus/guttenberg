@@ -101,6 +101,14 @@ class Products {
   public function ShortDescription() : string {
     return $this->products_short_description;
   }
+
+  public function Price() : double {
+    return $this->products_price;
+  }
+
+  public function Weight() : double {
+    return $this->products_weight;
+  }
   /**
    * private methods
    */
