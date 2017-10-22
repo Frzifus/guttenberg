@@ -7,6 +7,7 @@
  */
 include 'FlushProducts.php';
 include 'ContentTuple.php';
+include 'Products.php';
 
 /******************************************************************************/
 /* functions                                                                  */
@@ -59,15 +60,21 @@ function MapAndParseDom(ContentTuple $tuple) : Products {
   $xpath = new \DOMXPath($doc);
 
   try {
-    $product->set_Name($xpath->query($tuple->pattern["products_name"]));
-    $product->set_Model($xpath->query($tuple->pattern["products_model"]));
-    $product->set_EAN($xpath->query($tuple->pattern["products_ean"]));
+    $product->set_Name($xpath->query(
+      $tuple->Pattern["DOMPath"]["products_name"])->item(0)->textContent);
+    $product->set_Model($xpath->query(
+      $tuple->Pattern["DOMPath"]["products_model"])->item(0)->textContent);
+    $product->set_EAN($xpath->query(
+      $tuple->Pattern["DOMPath"]["products_ean"])->item(0)->textContent);
     $product->set_Description($xpath->query(
-      $tuple->pattern["products_description"]));
+      $tuple->Pattern["DOMPath"]["products_description"])->item(0)->textContent);
     $product->set_ShortDescription($xpath->query(
-      $tuple->pattern["products_short_description"]));
-    $product->set_Price($xpath->query($tuple->pattern["products_price"]));
-    $product->set_Weight($xpath->query($tuple->pattern["products_weight"]));
+      $tuple->Pattern["DOMPath"]["products_short_description"])
+                                   ->item(0)->textContent);
+    $product->set_Price($xpath->query(
+      $tuple->Pattern["DOMPath"]["products_price"])->item(0)->textContent);
+    $product->set_Weight($xpath->query(
+      $tuple->Pattern["DOMPath"]["products_weight"])->item(0)->textContent);
   } catch (Exception $e) {
     echo $e->getMessage();
   }
@@ -120,6 +127,7 @@ foreach(preg_split("/((\r?\n)|(\r\n?))/", $rawText) as $line) {
 }
 
 $patternFilelist = ListAllPatternFiles();
+
 $allPattern = ReadAllPattern($patternFilelist);
 
 $content = PullContent($URIS, $allPattern);
@@ -129,6 +137,9 @@ $products = array();
 foreach ($content as $tuple) {
   $products[] = MapAndParseDom($tuple);
 }
+
+var_dump($products);
+
 foreach ($products as $product) {
   FlushProduct($product);
 }
