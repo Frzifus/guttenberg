@@ -54,7 +54,7 @@ class Products {
     $this->products_name = $name;
   }
 
-  public function set_Model(string model) {
+  public function set_Model(string $model) {
     $this->products_model = $model;
   }
 
