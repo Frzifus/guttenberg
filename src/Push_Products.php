@@ -62,22 +62,48 @@ function MapAndParseDom(ContentTuple $tuple) : Products {
   try {
     $product->set_Name($xpath->query(
       $tuple->Pattern["DOMPath"]["products_name"])->item(0)->textContent);
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
+  try {
     $product->set_Model($xpath->query(
       $tuple->Pattern["DOMPath"]["products_model"])->item(0)->textContent);
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
+  try {
     $product->set_EAN($xpath->query(
       $tuple->Pattern["DOMPath"]["products_ean"])->item(0)->textContent);
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
+  try {
     $product->set_Description($xpath->query(
       $tuple->Pattern["DOMPath"]["products_description"])->item(0)->textContent);
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
+  try {
     $product->set_ShortDescription($xpath->query(
       $tuple->Pattern["DOMPath"]["products_short_description"])
                                    ->item(0)->textContent);
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
+  try {
     $product->set_Price($xpath->query(
       $tuple->Pattern["DOMPath"]["products_price"])->item(0)->textContent);
+  } catch (Exception $e) {
+    echo $e->getMessage();
+  }
+  try {
     $product->set_Weight($xpath->query(
       $tuple->Pattern["DOMPath"]["products_weight"])->item(0)->textContent);
   } catch (Exception $e) {
     echo $e->getMessage();
   }
+
+
   return $product;
 }
 
