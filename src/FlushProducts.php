@@ -11,7 +11,7 @@ function FlushProducts(Products $model) {
       'products_description' => $model->Description(),
       'products_short_description' => $model->ShortDescription(),
       'products_price'  => $model->Price(),
-      'manufacturer_id' => $model->Manufacturer(),
+      'manufacturer_id' => $model->ManufacturerId(),
       'products_weight' => $model->Weight(),
       'products_image' => []
     ]

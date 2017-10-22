@@ -33,6 +33,8 @@ class Products {
   private $products_price;
   /** @products_weight @Column(type="decimal(15.4)") */
   private $products_weight;
+  /** @manufacturer_id @Column(type="integer") */
+  private $manufacturer_id;
 
   // /** @products_keywords @Column(type="varchar255") */
   // private string products_keywords;
@@ -52,6 +54,10 @@ class Products {
 
   public function set_Name(string $name) {
     $this->products_name = $name;
+  }
+
+  public function set_ManufacturerId(int $id) {
+    $this->manufacturer_id = $id;
   }
 
   public function set_Model(string $model) {
@@ -108,6 +114,10 @@ class Products {
 
   public function Weight() : double {
     return $this->products_weight;
+  }
+
+  public function ManufacturerId() : int {
+    return $this->manufacturer_id;
   }
   /**
    * private methods
