@@ -16,7 +16,10 @@ function FlushProducts(Products $model) {
     ]
   ];
 
-  $filename = 'data/' . $model->Prefix() . '_' . rand(0, 10000) . '.json';
+  $filename = 'data/' . $model->Prefix() . '_' . base64_encode($model->Prefix()
+                                                               . $model->Model()
+                                                               . $model->EAN()
+                                                              ) . '.json';
 
   file_put_contents($filename, json_encode($toJson));
 }
