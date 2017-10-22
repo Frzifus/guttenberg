@@ -59,51 +59,64 @@ function MapAndParseDom(ContentTuple $tuple) : Products {
 
   $xpath = new \DOMXPath($doc);
 
-  try {
+  $isValid = function($stuff)  {
+    return (strlen($stuff) > 0) ? true : false;
+  };
+
+  $product->set_Prefix($tuple->Pattern["prefix"]);
+
+  if ($isValid($tuple->Pattern["DOMPath"]["manufacturer_id"])) {
+    $product->set_ManufacturerId($xpath->query(
+      $tuple->Pattern["DOMPath"]["manufacturer_id"])->item(0)->textContent);
+  } else {
+    $product->set_ManufacturerId("none");
+  }
+
+  if ($isValid($tuple->Pattern["DOMPath"]["products_name"])) {
     $product->set_Name($xpath->query(
       $tuple->Pattern["DOMPath"]["products_name"])->item(0)->textContent);
-  } catch (Exception $e) {
-    echo $e->getMessage();
+  } else {
+    $product->set_Name("none");
   }
-  try {
+
+  if ($isValid($tuple->Pattern["DOMPath"]["products_model"])) {
     $product->set_Model($xpath->query(
       $tuple->Pattern["DOMPath"]["products_model"])->item(0)->textContent);
-  } catch (Exception $e) {
-    echo $e->getMessage();
+  } else {
+    $product->set_Model("none");
   }
-  try {
+  if ($isValid($tuple->Pattern["DOMPath"]["products_ean"])) {
     $product->set_EAN($xpath->query(
       $tuple->Pattern["DOMPath"]["products_ean"])->item(0)->textContent);
-  } catch (Exception $e) {
-    echo $e->getMessage();
+  } else {
+    $product->set_EAN("none");
   }
-  try {
+  if ($isValid($tuple->Pattern["DOMPath"]["products_description"])) {
     $product->set_Description($xpath->query(
-      $tuple->Pattern["DOMPath"]["products_description"])->item(0)->textContent);
-  } catch (Exception $e) {
-    echo $e->getMessage();
+      $tuple->Pattern["DOMPath"]["products_description"])
+                              ->item(0)->textContent);
+  } else {
+    $product->set_Description("none");
   }
-  try {
+  if ($isValid($tuple->Pattern["DOMPath"]["products_short_description"])) {
     $product->set_ShortDescription($xpath->query(
       $tuple->Pattern["DOMPath"]["products_short_description"])
                                    ->item(0)->textContent);
-  } catch (Exception $e) {
-    echo $e->getMessage();
+  } else {
+    $product->set_ShortDescription("none");
   }
-  try {
+  if ($isValid($tuple->Pattern["DOMPath"]["products_price"])) {
     $product->set_Price($xpath->query(
       $tuple->Pattern["DOMPath"]["products_price"])->item(0)->textContent);
-  } catch (Exception $e) {
-    echo $e->getMessage();
+  } else {
+    $product->set_Price("none");
   }
-  try {
+  if ($isValid($tuple->Pattern["DOMPath"]["products_weight"])) {
     $product->set_Weight($xpath->query(
       $tuple->Pattern["DOMPath"]["products_weight"])->item(0)->textContent);
-  } catch (Exception $e) {
-    echo $e->getMessage();
-  }
-
-
+  } else {
+  $product->set_Weight("none");
+   }
   return $product;
 }
 
@@ -137,7 +150,11 @@ function ReadAllPattern(array $files) : array {
  * @var rawText
  */
 // $rawText = $_POST["URI"];
-$rawText = "https://allpa.de/bedienungen/lenkungssytemen/cilinders/seastar-zylinder-kgm-fur-hydraulisches-innenbord-steuersystem-ba125-3atm-jet.html";
+
+// testpage
+$rawText = "https://allpa.de/bedienungen/lenkungssytemen/cilinders/"
+  . "seastar-zylinder-kgm-fur-hydraulisches-innenbord-steuersystem-"
+  . "ba125-3atm-jet.html";
 
 $URIS = array();
 
@@ -164,9 +181,7 @@ foreach ($content as $tuple) {
   $products[] = MapAndParseDom($tuple);
 }
 
-var_dump($products);
-
 foreach ($products as $product) {
-  FlushProduct($product);
+  FlushProducts($product);
 }
 ?>

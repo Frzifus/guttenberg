@@ -29,7 +29,7 @@ class Products {
   private $products_description;
   /** @products_short_description @Column(type="text") */
   private $products_short_description;
-  /** @products_price @Column(type="decimal(15.4)") */
+  /** @products_pricei@Column(type="decimal(15.4)") */
   private $products_price;
   /** @products_weight @Column(type="decimal(15.4)") */
   private $products_weight;
@@ -56,7 +56,7 @@ class Products {
     $this->products_name = $name;
   }
 
-  public function set_ManufacturerId(int $id) {
+  public function set_ManufacturerId(string $id) {
     $this->manufacturer_id = $id;
   }
 
@@ -78,6 +78,14 @@ class Products {
 
   public function set_ShortDescription(string $desc) {
     $this->products_short_description = $desc;
+  }
+
+  public function set_Price(string $price) {
+    $this->products_price = $price;
+  }
+
+  public function set_Weight(string $weight) {
+    $this->products_weight = $weight;
   }
 
   public function Prefix() : string {
@@ -108,15 +116,15 @@ class Products {
     return $this->products_short_description;
   }
 
-  public function Price() : double {
+  public function Price() : string {
     return $this->products_price;
   }
 
-  public function Weight() : double {
+  public function Weight() : string {
     return $this->products_weight;
   }
 
-  public function ManufacturerId() : int {
+  public function ManufacturerId() : string {
     return $this->manufacturer_id;
   }
   /**

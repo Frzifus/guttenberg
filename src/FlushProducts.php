@@ -16,7 +16,7 @@ function FlushProducts(Products $model) {
     ]
   ];
 
-  $filename = 'data/' . $model->Prefix() . '_' . $model->Name() . '.json';
+  $filename = 'data/' . $model->Prefix() . '_' . rand(0, 10000) . '.json';
 
-  file_put_content($filename, json_encode($toJson));
+  file_put_contents($filename, json_encode($toJson));
 }
