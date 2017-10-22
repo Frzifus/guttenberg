@@ -8,9 +8,6 @@
     "products_short_description" : "",
     "products_price" : "",
     "products_weight" : "",
-    "products_image" : {
-      "1" : "http://example.com/img1.png",
-      "2" : "http://example.com/img2.png"
-    }
-    }
+    "products_image" : []
+  }
 }
