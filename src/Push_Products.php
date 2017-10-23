@@ -120,9 +120,9 @@ function MapAndParseDom(ContentTuple $tuple) : Products {
   return $product;
 }
 
-function ListAllPatternFiles(string $path = "./pattern") : array {
+function ListAllPatternFiles() : array {
   $allPattern = array();
-  $dir = scandir($path);
+  $dir = scandir("./pattern");
   foreach ($dir as $file) {
     if (preg_match("/\.json/", $file)) {
       $allPattern[] = $file;
